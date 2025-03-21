@@ -10,9 +10,6 @@ PLAYER_IMAGE = pygame.image.load('assets/fish.png')
 ENEMY_IMAGE = pygame.image.load('assets/shark.png')
 BACKGROUND_IMAGE = pygame.image.load('assets/bg.png')
 FPS = 60  # Nombre de frames par seconde
-SCORE = 0
-BEST_SCORE = 0
-running = True
 
 
 class Game:
@@ -28,7 +25,6 @@ class Game:
         self.last_enemy_spawn = pygame.time.get_ticks()
         self.enemy_spawn_interval = 2500
         self.score = 0
-        self.best_score = 0
 
     def run(self):
         while self.running:
@@ -107,9 +103,9 @@ class Enemy(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.transform.scale(ENEMY_IMAGE, (50, 50))
         self.rect = self.image.get_rect()
-        self.speed = max(1.5, game.score / 6 + random.randint(0, 1))
+        self.speed = 1.5 + game.score / 6 + random.randint(0, 1)
         self.spawn_time = time.time()
-        self.lifetime = max(7, game.score / 6 + 7)
+        self.lifetime = 7 + game.score / 6 + 7
         self.player = player
         self.game = game
         self.game_over_triggered = False
