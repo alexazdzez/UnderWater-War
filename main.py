@@ -109,6 +109,7 @@ class Game:
         self.all_sprites.draw(self.screen)
         score_text = self.font.render(f"Score: {self.score}", True, (255, 255, 255))
         self.screen.blit(score_text, (10, 10))
+        self.player.draw_boost_bar(screen)
         pygame.display.flip()
 
     def spawn_enemy(self):
@@ -142,6 +143,24 @@ class Player(pygame.sprite.Sprite):
         self.boost_duration = 2000  # 2 secondes en millisecondes
         self.boost_cooldown = 5000  # 5 secondes de recharge
         self.last_boost_time = -self.boost_cooldown  # Pour pouvoir booster dès le début
+
+        # Définir les dimensions de la barre de recharge
+        self.bar_width = 200
+        self.bar_height = 20
+        self.bar_x = (SCREEN_WIDTH - self.bar_width) // 2
+        self.bar_y = SCREEN_HEIGHT - 40  # Juste au-dessus du bas de l'écran
+
+    def draw_boost_bar(self, screen):
+        current_time = pygame.time.get_ticks()
+        # Calcul de la durée restante du cooldown
+        if current_time - self.last_boost_time < self.boost_cooldown:
+            cooldown_progress = (current_time - self.last_boost_time) / self.boost_cooldown
+        else:
+            cooldown_progress = 0
+
+        # Dessiner la barre de recharge (vide ou remplie)
+        pygame.draw.rect(screen, (0, 0, 0), (self.bar_x, self.bar_y, self.bar_width, self.bar_height))  # Fond de la barre
+        pygame.draw.rect(screen, (0, 255, 0), (self.bar_x, self.bar_y, self.bar_width * (1 - cooldown_progress), self.bar_height))  # Barre remplie
 
     def update(self):
         keys = pygame.key.get_pressed()
