@@ -42,7 +42,7 @@ def save_highscore(score):
 class Menu:
     def __init__(self, screen):
         self.screen = screen
-        self.font = pygame.font.SysFont("Arial", 48)
+        self.font = pygame.font.SysFont("Arial", 40)
         self.running = True
         self.highscore = load_highscore()
 
@@ -51,11 +51,13 @@ class Menu:
             self.screen.fill((0, 0, 0))
             self.screen.blit(BACKGROUND_IMAGE, (0, 0))
             text = self.font.render("Underwater War", True, (255, 255, 255))
-            start_text = self.font.render("Appuie sur ESPACE pour jouer", True, (255, 255, 255))
+            start_text = self.font.render("Appuie sur éspace pour jouer", True, (255, 255, 255))
+            control_text = self.font.render("Appuie sur éspace pour booster utilise les flèches pour bouger", True, (255, 255, 255))
             highscore_text = self.font.render(f"Meilleur score: {self.highscore}", True, (255, 255, 255))
             self.screen.blit(text, (SCREEN_WIDTH // 2 - text.get_width() // 2, 200))
-            self.screen.blit(start_text, (SCREEN_WIDTH // 2 - start_text.get_width() // 2, 400))
-            self.screen.blit(highscore_text, (SCREEN_WIDTH // 2 - highscore_text.get_width() // 2, 600))
+            self.screen.blit(start_text, (SCREEN_WIDTH // 2 - start_text.get_width() // 2, 250))
+            self.screen.blit(control_text, (100, 300))
+            self.screen.blit(highscore_text, (SCREEN_WIDTH // 2 - highscore_text.get_width() // 2, 150))
             pygame.display.flip()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
